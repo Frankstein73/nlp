@@ -1,2 +1,4 @@
-pyspellchecker
-spacy==3.7.6
+numpy==2.0.2
+pyspellchecker==0.8.1
+spacy==3.8.2
+matplotlib==3.9.2
