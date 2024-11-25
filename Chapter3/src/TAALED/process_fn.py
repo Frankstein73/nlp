@@ -1,5 +1,3 @@
-
-
 def safe_divide(numerator, denominator):
     if denominator == 0 or denominator == 0.0:
         index = 0
@@ -16,6 +14,7 @@ def indexer(header_list, index_list, name, index):
 def resource_path(relative):
     import sys
     import os
+
     if hasattr(sys, "_MEIPASS"):
         return os.path.join(sys._MEIPASS, relative)
     return os.path.join(relative)
@@ -206,7 +205,6 @@ def maas_ttr(text):
 
 
 def mattr(text, window_length=50):  # from TAACO 2.0.4
-
     if len(text) < (window_length + 1):
         ma_ttr = safe_divide(len(set(text)), len(text))
 
@@ -225,7 +223,6 @@ def mattr(text, window_length=50):  # from TAACO 2.0.4
 
 
 def msttr(text, window_length=50):
-
     if len(text) < (window_length + 1):
         ms_ttr = safe_divide(len(set(text)), len(text))
 
