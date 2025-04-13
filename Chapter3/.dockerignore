@@ -8,3 +8,4 @@ result/
 .DS_Store
 .venv/
 DATA/
+.gitignore
