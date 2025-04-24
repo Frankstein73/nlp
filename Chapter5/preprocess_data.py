@@ -59,16 +59,29 @@ class CustomDataset(Dataset):
         return ret
 
 
-def read_files(dir_path="data_labelled", run_name="default", is_test=False):
+def read_files(
+    dir_path: str | None = None,
+    file_list: list[str] | None = None,
+    run_name: str = "default",
+    is_test: bool = False,
+):
     docs = []
     all_labels = []
-    print("Reading files from ", dir_path)
-
-    # 遍历文件夹中的所有文本文件
-    for file_path in glob.glob(dir_path + "/*.txt"):
-        texts, labels, doc_contexts = read_file(file_path, is_test)
-        all_labels.extend(labels)
-        docs.append((texts, labels, doc_contexts, file_path))
+    assert (dir_path is None) != (file_list is None), (
+        "dir_path and file_list cannot both be None"
+    )
+    if dir_path is not None:
+        print("Reading files from ", dir_path)
+        for file_path in glob.glob(dir_path + "/*.txt"):
+            texts, labels, doc_contexts = read_file(file_path, is_test)
+            all_labels.extend(labels)
+            docs.append((texts, labels, doc_contexts, file_path))
+    else:
+        print("Reading files from ", file_list)
+        for file_path in file_list:
+            texts, labels, doc_contexts = read_file(file_path, is_test)
+            all_labels.extend(labels)
+            docs.append((texts, labels, doc_contexts, file_path))
 
     print(docs[0])
     # 对标签进行编码
@@ -118,9 +131,9 @@ def read_file(file_path, is_test=False):
             # 使用正则表达式提取句子和标签
             # print(line)
             regex_results = (
-                re.findall(r"(.*?[\.\?!])\s*(\[[\w-]+\])", line)
+                re.findall(r"(.*?[\.\?!]+)\s*(\[[\w-]+\])", line)
                 if not is_test
-                else re.findall(r"(.*?[\.\?!])", line)
+                else re.findall(r"(.*?[\.\?!]+)", line)
             )
 
             # 对提取的句子和标签进行处理
